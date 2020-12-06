@@ -1,18 +1,72 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MyCalendar :events="reqAllEvents()"
+                :changeDate="changeDate"
+    />
+    <div class="right-block">
+      <ListDateEvents :events="selectedDateEvent()"/>
+      <CreateEventForm selectedDate="selectedDate"/>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+
+import CreateEventForm from '@/components/CreateEventForm.vue';
+import MyCalendar from '@/components/MyCalendar.vue';
+import ListDateEvents from '@/components/ListDateEvents.vue';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      selectedDay: new Date(),
+    };
+  },
   components: {
-    HelloWorld,
+    ListDateEvents,
+    MyCalendar,
+    CreateEventForm,
+  },
+  mounted() {
+    this.$store.dispatch('requestAllEvents');
+  },
+  methods: {
+    reqAllEvents() {
+      return this.$store.state.calendarEvents;
+    },
+    selectedDateEvent() {
+      console.log(this.$store.getters.filterDate(this.selectedDay));
+      return this.$store.getters.filterDate(this.selectedDay);
+    },
+    changeDate(data) {
+      this.selectedDay = data;
+    },
+
   },
 };
 </script>
+
+<style lang="scss">
+.home {
+  width: 600px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  padding: 45px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.right-block {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
