@@ -22,7 +22,7 @@
 <script>
 export default {
   name: 'CreateEventForm',
-  props: ['selectedDate'],
+  props: ['changeDate'],
   data() {
     return {
       eventName: '',
@@ -30,6 +30,16 @@ export default {
       startTime: '',
       endTime: '',
     };
+  },
+  watch: {
+
+    changeDate: {
+      immediate: true,
+      // eslint-disable-next-line no-unused-vars
+      handler(val, oldVal) {
+        this.startDate = val;
+      },
+    },
   },
   methods: {
     saveEvent() {
@@ -44,6 +54,9 @@ export default {
       this.startDate = '';
       this.startTime = '';
       this.endTime = '';
+    },
+    updateDay(date) {
+      this.startDate = date;
     },
 
   },

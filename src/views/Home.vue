@@ -5,7 +5,7 @@
     />
     <div class="right-block">
       <ListDateEvents :events="selectedDateEvent()"/>
-      <CreateEventForm selectedDate="selectedDate"/>
+      <CreateEventForm :changeDate="selectedDay"/>
     </div>
   </div>
 </template>
