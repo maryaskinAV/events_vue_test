@@ -33,6 +33,7 @@ export default {
 }
 .event{
   width: 100%;
+  margin: 5px 0;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   display: flex;
   line-height: 25px;

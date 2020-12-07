@@ -51,7 +51,7 @@ export default new Vuex.Store({
     },
     // eslint-disable-next-line no-unused-vars
     [EVENT_DELETE_REQUEST](state, e) {
-      state.calendarEvents.slice(state.calendarEvents.indexOf(e), 1);
+      state.calendarEvents.splice(state.calendarEvents.indexOf(e), 1);
       state.statusLoading = false;
     },
 
