@@ -32,7 +32,6 @@ export default {
     };
   },
   watch: {
-
     changeDate: {
       immediate: true,
       // eslint-disable-next-line no-unused-vars

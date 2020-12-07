@@ -49,6 +49,11 @@ export default new Vuex.Store({
       state.eventErrors = errors;
       state.statusLoading = false;
     },
+    // eslint-disable-next-line no-unused-vars
+    [EVENT_DELETE_REQUEST](state, e) {
+      state.calendarEvents.slice(state.calendarEvents.indexOf(e), 1);
+      state.statusLoading = false;
+    },
 
   },
   actions: {
@@ -76,16 +81,14 @@ export default new Vuex.Store({
           console.log(errors);
         });
     },
-    deleteEvent({ commit }, setData) {
+    deleteEvent({ commit }, event) {
       commit(EVENT_REQUEST);
-      http.delete(`/api/planning/${setData.id}/`)
+      http.delete(`/api/planning/${event.id}/`)
         .then((response) => {
-          // eslint-disable-next-line no-unused-vars
-          const { data } = response;
-          commit(EVENT_DELETE_REQUEST);
-        })
-        .catch((error) => {
-          console.log(error);
+          if (response.status === 204) {
+            commit(EVENT_DELETE_REQUEST, event);
+            commit(EVENTS_REQUEST);
+          }
         });
     },
   },

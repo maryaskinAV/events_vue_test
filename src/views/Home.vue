@@ -4,7 +4,7 @@
                 :changeDate="changeDate"
     />
     <div class="right-block">
-      <ListDateEvents :events="selectedDateEvent()"/>
+      <ListDateEvents :deleteEvents="deleteEvents" :events="filteredEvents()"/>
       <CreateEventForm :changeDate="selectedDay"/>
     </div>
   </div>
@@ -36,12 +36,14 @@ export default {
     reqAllEvents() {
       return this.$store.state.calendarEvents;
     },
-    selectedDateEvent() {
-      console.log(this.$store.getters.filterDate(this.selectedDay));
-      return this.$store.getters.filterDate(this.selectedDay);
-    },
     changeDate(data) {
       this.selectedDay = data;
+    },
+    filteredEvents() {
+      return this.$store.getters.filterDate(this.selectedDay);
+    },
+    deleteEvents(data) {
+      this.$store.dispatch('deleteEvent', data);
     },
 
   },
@@ -68,5 +70,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin: 0 10px;
 }
 </style>
